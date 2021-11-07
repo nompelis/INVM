@@ -13,7 +13,9 @@ int main( int argc, char *argv[] )
    invm_Opcodes_Set( &vm );
    invm_Machine_DumpRegisters( &vm );
 
-   invm_Machine_Run( &vm, 2 );
+   vm.prog[0] = 0x02;   // this is presently the "SLEEP" instruction
+   vm.prog[2] = 0x01;   // this is the "EXIT" instruction
+   invm_Machine_Run( &vm, 4 );
    printf("Completed short run\n");
 
 // vm.state = RUNNING;   // get it back to a running state...

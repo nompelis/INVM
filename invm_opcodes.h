@@ -8,6 +8,7 @@
 enum opcode_values {
    NOP = 0,
    EXIT,
+   SLEEP,
    STORE_REG,
    JUMP_TO,
    JUMP_Z,
