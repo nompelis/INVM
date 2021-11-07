@@ -48,5 +48,11 @@ enum opcode_values {
 };
 
 
+//
+// Function prototypes/signatures
+//
+
+int invm_Opcodes_Set( invm_t *p );
+
 #endif
 
