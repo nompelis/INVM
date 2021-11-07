@@ -39,6 +39,12 @@ int invm_Machine_Init( invm_t *p )
 #endif
    }
 
+   int n;
+   for(n=0;n<p->nreg;++n) p->registers[n].type = INTEGER;
+#ifdef _DEBUG_
+   for(n=0;n<p->nreg;++n) p->registers[n].type = STRING;
+#endif
+
    memset( p->prog, '\0', (size_t) p->psize );
    memset( p->stack, '\0', (size_t) p->ssize );
 
@@ -47,13 +53,35 @@ int invm_Machine_Init( invm_t *p )
    p->flags.iof = 0;
    p->flags.fpe = 0;
 
-   int n;
    for(n=0;n<256;++n) p->opcodes[n] = NULL;
 
    p->id = num_vm++;
    memset( p->name, '\0', 32 );
 
    p->state = RUNNING;
+
+   return 0;
+}
+
+
+int invm_Machine_DumpRegisters( invm_t *p )
+{
+   if( p == NULL ) return 1;
+
+   int n;
+   for(n=0;n<p->nreg;++n) {
+      if( p->registers[n].type == INTEGER ) {
+         fprintf( stdout, " Register %.2d  Int %d10d   Hex %8x \n",
+                  n, p->registers[n].content.i,
+                     p->registers[n].content.i );
+      } else
+      if( p->registers[n].type == STRING ) {
+         fprintf( stdout, " Register %.2d  String: \"%s\" \n",
+                  n, p->registers[n].content.s );
+      } else {
+         // this should never happen
+      }
+   }
 
    return 0;
 }

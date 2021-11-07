@@ -11,6 +11,7 @@ int main( int argc, char *argv[] )
 
    invm_Machine_Init( &vm );
    invm_Opcodes_Set( &vm );
+   invm_Machine_DumpRegisters( &vm );
 
 
    return 0;

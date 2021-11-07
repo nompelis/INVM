@@ -75,5 +75,7 @@ typedef struct invm_s {
 
 int invm_Machine_Init( invm_t *p );
 
+int invm_Machine_DumpRegisters( invm_t *p );
+
 #endif
 
