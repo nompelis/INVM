@@ -7,6 +7,10 @@
 
 int main( int argc, char *argv[] )
 {
+   invm_t vm;
+
+   invm_Machine_Init( &vm );
+   invm_Opcodes_Set( &vm );
 
 
    return 0;

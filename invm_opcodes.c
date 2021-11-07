@@ -6,12 +6,31 @@
 #include "invm_opcodes.h"
 
 
+void vm_noop( invm_t *p )
+{
+#ifdef _DEBUG_
+   fprintf( stdout, " [VM]  NOOP \n");
+#endif
+   ++( p->idx );
+}
+
+
+void vm_exit( invm_t *p )
+{
+#ifdef _DEBUG_
+   fprintf( stdout, " [VM]  EXIT \n");
+#endif
+   p->state = STOPPED;
+   ++( p->idx );
+}
+
+
 int invm_Opcodes_Set( invm_t *p )
 {
    if( p == NULL ) return 1;
 
-   p->opcodes[NOP] = NULL;
-   p->opcodes[EXIT] = NULL;
+   p->opcodes[NOP] = vm_noop;
+   p->opcodes[EXIT] = vm_exit;
    p->opcodes[STORE_REG] = NULL;
    p->opcodes[JUMP_TO] = NULL;
    p->opcodes[JUMP_Z] = NULL;

@@ -26,7 +26,17 @@ int invm_Machine_Init( invm_t *p )
       if( p->registers != NULL ) free( p->registers );
       if( p->prog != NULL ) free( p->prog );
       if( p->stack != NULL ) free( p->stack );
+#ifdef _DEBUG_
+      fprintf( stdout, " [INVM]  Error: memory allocation for VM \n");
+#endif
       return -1;
+#ifdef _DEBUG_
+   } else {
+      fprintf( stdout, " [INVM]  Allocated VM data: \n %s%d%s%d%s%d \n",
+               "  Registers: ", p->nreg,
+               "  Prog bytes: ", (int) p->psize,
+               "  Stack bytes: ", (int) p->ssize );
+#endif
    }
 
    memset( p->prog, '\0', (size_t) p->psize );
