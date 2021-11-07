@@ -9,7 +9,8 @@
 //
 enum vm_states {
    RUNNING = 0,
-   STOPPED = 1
+   STOPPED = 1,
+   UNREADY = 2
 };
 
 
@@ -76,6 +77,8 @@ typedef struct invm_s {
 int invm_Machine_Init( invm_t *p );
 
 int invm_Machine_DumpRegisters( invm_t *p );
+
+int invm_Machine_Clear( invm_t *p );
 
 #endif
 

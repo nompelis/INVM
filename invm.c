@@ -20,7 +20,7 @@ int invm_Machine_Init( invm_t *p )
    p->prog = (unsigned char *) malloc( ((size_t) p->psize) *
                                         sizeof(unsigned char) );
    p->ssize = (size_t) (0x0001 << 10);     // 1024 bytes
-   p->stack= (unsigned char *) malloc( ((size_t) p->psize) *
+   p->stack = (unsigned char *) malloc( ((size_t) p->psize) *
                                         sizeof(unsigned char) );
    if( p->registers == NULL || p->prog == NULL || p->stack == NULL ) {
       if( p->registers != NULL ) free( p->registers );
@@ -82,6 +82,29 @@ int invm_Machine_DumpRegisters( invm_t *p )
          // this should never happen
       }
    }
+
+   return 0;
+}
+
+
+int invm_Machine_Clear( invm_t *p )
+{
+   if( p == NULL ) return 1;
+#ifdef _DEBUG_
+   fprintf( stdout, " [INVM]  Clearing VM struct \n");
+#endif
+
+   free( p->registers );
+   free( p->prog );
+   free( p->stack );
+   int n;
+   for(n=0;n<256;++n) p->opcodes[n] = NULL;
+   p->nreg = 0;
+   p->psize = 0;
+   p->ssize = 0;
+   p->id = 0;
+   memset( p->name, '\0', 32 );
+   p->state = UNREADY;
 
    return 0;
 }
