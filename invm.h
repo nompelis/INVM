@@ -80,5 +80,7 @@ int invm_Machine_DumpRegisters( invm_t *p );
 
 int invm_Machine_Clear( invm_t *p );
 
+int invm_Machine_Run( invm_t *p, int num_steps );
+
 #endif
 

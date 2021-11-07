@@ -109,3 +109,37 @@ int invm_Machine_Clear( invm_t *p )
    return 0;
 }
 
+
+int invm_Machine_Run( invm_t *p, int num_steps )
+{
+   if( p == NULL ) return -1;
+
+   int step=0;
+   unsigned char opcode;
+
+   // initial step
+   p->idx = 0;
+   while( p->state == RUNNING ) {
+
+      // stop the machine if we reached the end of the program
+      if( p->idx >= (int) p->psize ) {
+         p->opcodes[EXIT]( p );
+      } else {
+         opcode = p->prog[ p->idx ];   // get instruction from program
+         // execute if this is a valid instruction
+         if( p->opcodes[opcode] != NULL ) {
+            p->opcodes[opcode]( p );
+         } else {
+            fprintf( stdout, " [INVM]  Null (non-existent) instruction \n");
+         }
+      }
+
+      // increase step
+      ++step;
+      // check if we need to stop
+      if( num_steps > 0 ) if( step == num_steps ) p->state = STOPPED;
+   }
+
+   return 0;
+}
+
