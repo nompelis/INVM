@@ -21,7 +21,7 @@ enum vm_states {
 //
 typedef struct vmreg_s {
     union {
-        unsigned int i;
+        int i;
         char *s;
     } content;
     enum { INTEGER, STRING } type;
