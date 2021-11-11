@@ -40,7 +40,12 @@ int invm_Machine_Init( invm_t *p )
    }
 
    int n;
-   for(n=0;n<p->nreg;++n) p->registers[n].type = INTEGER;
+   for(n=0;n<p->nreg;++n) {
+      p->registers[n].type = INTEGER;     // make this a default
+      // the remaining contents are cleaned-up
+      p->registers[n].content.i = 0;
+      p->registers[n].content.s = NULL;
+   }
 #ifdef _DEBUG_
    for(n=0;n<p->nreg;++n) p->registers[n].type = STRING;
 #endif
