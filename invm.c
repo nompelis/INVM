@@ -55,6 +55,7 @@ int invm_Machine_Init( invm_t *p )
 
    p->sptr = 0;
 
+   p->flags.ir = 0;
    p->flags.iof = 0;
    p->flags.fpe = 0;
 

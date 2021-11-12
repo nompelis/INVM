@@ -33,6 +33,7 @@ typedef struct vmreg_s {
 // will take a naive approach)
 //
 typedef struct vmflags_s {
+   unsigned char ir;      // illegal register
    unsigned char iof;     // integer overflow
    unsigned char fpe;     // floating point exception (NO WORK)
    // ... (add more here)
