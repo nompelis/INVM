@@ -8,7 +8,8 @@ CXXOPTS = -g -Wall -fPIC -O0
 LIBS = -lm 
 
 ###### debugging switches
-DEBUG = -D   _DEBUG_
+DEBUG += -D   _DEBUG_
+DEBUG += -D   _DEBUG2_
 
 
 all:
