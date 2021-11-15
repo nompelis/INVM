@@ -7,15 +7,8 @@
 #include "invm_opcodes.h"
 
 
-
-void make_program( unsigned char* prog )
+void integer_to_BigEndianUchar( int num, unsigned char s[] )
 {
-   size_t i=0;
-   unsigned char uc=0;
-   int num=0;
-// char string[] = "This is a string!";
-
-
    // Set some convenience bit-shifted ints so that we can make a Big Endian
    // decomposition of a 32-bit integer
    int i3,i2,i1,i0;
@@ -23,7 +16,28 @@ void make_program( unsigned char* prog )
    i1 = i0 << 8;
    i2 = i1 << 8;
    i3 = i2 << 8;
-   printf("Bit-shifted 32-bit int: %x %x %x %x \n", i3, i2, i1, i0 );
+
+#ifdef _DEBUG2_
+   fprintf( stdout, "Bit-shifted 32-bit int: %x %x %x %x \n", i3, i2, i1, i0 );
+#endif
+   s[0] = (unsigned char) ((num & i3) >> 24 );
+   s[1] = (unsigned char) ((num & i2) >> 16 );
+   s[2] = (unsigned char) ((num & i1) >> 8 );
+   s[3] = (unsigned char) ((num & i0) >> 0 );
+#ifdef _DEBUG2_
+   fprintf( stdout, "Big endian stored (as uchar): %x %x %x %x \n",
+           s[0], s[1], s[2], s[3] );
+   fprintf( stdout, "Integer in program: \"%x\" \n", num );
+#endif
+}
+
+
+void make_program( unsigned char* prog )
+{
+   size_t i=0;
+   int num=0;
+// char string[] = "This is a string!";
+
 
    // inject a statement to store an integer to a register
    prog[i] = (unsigned char) INT_STORE;    // the instruction
@@ -31,21 +45,13 @@ void make_program( unsigned char* prog )
    prog[i] = (unsigned char) 3;            // the register at slot "3" (4th)
    i = i + 1;
    num = 2;       // payload, the number "2" (will be used for a 2 second sleep)
-   uc = (unsigned char) ((num & i3) >> 24 );
-   prog[i] = uc;
-   i = i + 1;
-   uc = (unsigned char) ((num & i2) >> 16 );
-   prog[i] = uc;
-   i = i + 1;
-   uc = (unsigned char) ((num & i1) >> 8 );
-   prog[i] = uc;
-   i = i + 1;
-   uc = (unsigned char) ((num & i0) >> 0 );
-   prog[i] = uc;
-   i = i + 1;
+   integer_to_BigEndianUchar( num, &( prog[i] ) );
+   i = i + 4;
+#ifdef _DEBUG_
    printf("Big endian stored (as uchar): %x %x %x %x \n",
           prog[i-4], prog[i-3], prog[i-2], prog[i-1] );
-   printf("Integer in program: \"%x\" \n", num );
+   printf("Integer in program: \"%d\" \n", num );
+#endif
 
    // inject a sleep statement; uses as payload the integer stored in a register
    prog[i] = (unsigned char) SLEEP;
