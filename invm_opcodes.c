@@ -37,13 +37,13 @@ void vm_sleep( invm_t *p )
    // get the register number
    unsigned char reg = p->prog[ p->idx ];
 #ifdef _DEBUG2_
-   fprintf( stdout, " [DEBUG]  Got register number: \%d \n", reg );
+   fprintf( stdout, " [DEBUG]  Got register number: %d \n", reg );
 #endif
 
    // check for the register being valid (we only have so many registers)
    if( reg >= p->nreg ) {
 #ifdef _DEBUG2_
-      fprintf( stdout, " [DEBUG]  Bad register number: \%d \n", reg );
+      fprintf( stdout, " [DEBUG]  Bad register number: %d \n", reg );
 #endif
       // set a flag on 'register error" (should be done by the compiler, but...)
       p->flags.ir = 1;
@@ -86,14 +86,14 @@ void vm_int_store( invm_t *p )
    // get the register number
    unsigned char reg = p->prog[ p->idx ];
 #ifdef _DEBUG2_
-   fprintf( stdout, " [DEBUG]  Got register number: \%d \n", reg );
+   fprintf( stdout, " [DEBUG]  Got register number: %d \n", reg );
 #endif
    p->idx += 1;
 
    // check for the register being valid
    if( reg >= p->nreg ) {
 #ifdef _DEBUG2_
-      fprintf( stdout, " [DEBUG]  Bad register number: \%d \n", reg );
+      fprintf( stdout, " [DEBUG]  Bad register number: %d \n", reg );
 #endif
       // set a flag on 'register error" (should be done by the compiler, but...)
       p->flags.ir = 1;
